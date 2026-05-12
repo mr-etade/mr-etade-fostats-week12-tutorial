@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 4: Testing the Slope</title>
+<link rel="stylesheet" href="styles.css">
+<script>
+  MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }, svg: { fontCache: 'global' } };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="page-wrapper">
+  <nav class="breadcrumb">
+    <a href="index.html">&larr; Tutorial home</a>
+    <span class="section-pill">Section 4 of 4</span>
+  </nav>
+
+  <main class="container">
+    <header class="section-header">
+      <h1>Testing the Slope &mdash; Walkthrough</h1>
+      <p class="lead">Is the relationship real, or could the slope we estimated have come from random chance? A two-tailed $t$-test on $\beta_1$ gives the verdict. Work each step in your exercise book, then enter the answer here. Each step unlocks the next.</p>
+    </header>
+
+    <!-- STEPPER ANIMATION -->
+    <section class="explorer">
+      <h2>The 3 steps at a glance</h2>
+      <div class="stepper-static">
+        <div class="step-item"><span class="step-num">1</span><span>State $H_0$ &amp; $H_a$</span></div>
+        <div class="step-arrow">&rarr;</div>
+        <div class="step-item"><span class="step-num">2</span><span>Compute $t = m / \text{SE}(m)$</span></div>
+        <div class="step-arrow">&rarr;</div>
+        <div class="step-item"><span class="step-num">3</span><span>Compare &amp; conclude</span></div>
+      </div>
+    </section>
+
+    <!-- WALKTHROUGH -->
+    <section class="walkthrough" id="problem1">
+      <div class="wt-header">
+        <h2>Cybersecurity Training &amp; Phishing-Test Failures</h2>
+        <span class="wt-badge">$t$-test on $\beta_1$</span>
+      </div>
+      <div class="wt-scenario">
+        <p>A WPU IT security team runs a phishing-awareness programme for $n = 10$ departments. For each department, $x$ is the number of cybersecurity training hours completed, and $y$ is the number of failures (out of 50) on a follow-up phishing-simulation test.</p>
+        <p style="font-family: var(--font-mono); font-size: 0.92rem; background: var(--paper); padding: 0.85rem 1rem; border: var(--border-thin); margin: 1rem 0;">
+          $x$: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 &nbsp; (training hours)<br>
+          $y$: 34, 30, 38, 22, 32, 18, 24, 10, 14, 6 &nbsp; (failures)
+        </p>
+        <p>You've already computed the regression in the lab:</p>
+        <p style="font-family: var(--font-mono); font-size: 0.92rem; background: var(--cream); padding: 0.85rem 1rem; border: var(--border-thin); margin: 1rem 0;">
+          $n = 10$, &nbsp; $m \approx -3.10$, &nbsp; $c \approx 39.87$, &nbsp; $r \approx -0.873$<br>
+          $\sum (x_i - \bar{x})^2 = 82.5$, &nbsp; $s_e \approx 5.56$, &nbsp; $\text{SE}(m) \approx 0.612$
+        </p>
+        <p>Test whether the slope is statistically significant at $\alpha = 0.05$ (two-tailed).</p>
+      </div>
+
+      <div class="wt-step" data-step="1">
+        <div class="wt-step-header">
+          <span class="wt-step-num">Step 1</span>
+          <span class="wt-step-title">State the hypotheses on the slope</span>
+        </div>
+        <p>Match each hypothesis to the correct statement.</p>
+        <div class="match-pair">
+          <div class="match-row">
+            <span>$H_0$:</span>
+            <select data-answer="a" class="match-select">
+              <option value="">— select —</option>
+              <option value="a">$\beta_1 = 0$ &nbsp; (no linear relationship)</option>
+              <option value="b">$\beta_1 \leq 0$ &nbsp; (slope is not positive)</option>
+              <option value="c">$\beta_1 \geq 0$ &nbsp; (slope is not negative)</option>
+              <option value="d">$\beta_1 \neq 0$ &nbsp; (a linear relationship exists)</option>
+            </select>
+          </div>
+          <div class="match-row">
+            <span>$H_a$:</span>
+            <select data-answer="d" class="match-select">
+              <option value="">— select —</option>
+              <option value="a">$\beta_1 = 0$ &nbsp; (no linear relationship)</option>
+              <option value="b">$\beta_1 \leq 0$ &nbsp; (slope is not positive)</option>
+              <option value="c">$\beta_1 \geq 0$ &nbsp; (slope is not negative)</option>
+              <option value="d">$\beta_1 \neq 0$ &nbsp; (a linear relationship exists)</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn-check">Check Step 1</button>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="wt-step locked" data-step="2">
+        <div class="wt-step-header">
+          <span class="wt-step-num">Step 2</span>
+          <span class="wt-step-title">Compute the test statistic</span>
+        </div>
+        <p class="wt-hint">Use $t = \dfrac{m}{\text{SE}(m)}$ with $m = -3.10$ and $\text{SE}(m) = 0.612$. Report $|t|$, rounded to 2 decimal places.</p>
+        <div class="input-row">
+          <div class="input-cell">
+            <label>$|t|$</label>
+            <input type="number" step="0.01" data-answer="5.07" data-tolerance="0.1" class="numeric-input">
+          </div>
+        </div>
+        <button class="btn-check">Check Step 2</button>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="wt-step locked" data-step="3">
+        <div class="wt-step-header">
+          <span class="wt-step-num">Step 3</span>
+          <span class="wt-step-title">Decision &amp; conclusion</span>
+        </div>
+        <p>At $\alpha = 0.05$, two-tailed, $df = n - 2 = 8$, the critical value is $t_{0.025,\,8} = 2.306$. Based on $|t| = 5.07$:</p>
+        <div class="mc-options" data-correct="b">
+          <label class="mc-option">
+            <input type="radio" name="p1q3-mc" value="a">
+            <span>Fail to reject $H_0$ &mdash; there is no evidence that training hours are linearly related to phishing-test failures.</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="p1q3-mc" value="b">
+            <span>Reject $H_0$ &mdash; there is strong evidence of a linear relationship between training hours and phishing-test failures, and the negative slope indicates more training is associated with fewer failures.</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="p1q3-mc" value="c">
+            <span>Reject $H_0$ &mdash; this proves that training hours <em>cause</em> the reduction in phishing-test failures.</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="p1q3-mc" value="d">
+            <span>The test is inconclusive at this sample size.</span>
+          </label>
+        </div>
+        <button class="btn-check">Check Step 3</button>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="wt-complete locked" data-completion="1">
+        <div class="wt-complete-content">
+          <span class="wt-celebration">Done.</span>
+          <h3>Tutorial complete!</h3>
+          <p>You've worked through the full Week 12 procedure: computing $r$ and $R^2$, reading residual plots, watching out for lurking variables, and testing the slope. Bring your exercise book to Friday's lab for marking.</p>
+          <a href="index.html" class="btn-primary">Back to home</a>
+        </div>
+      </div>
+    </section>
+
+    <nav class="section-nav">
+      <a href="section3.html" class="btn-secondary">&larr; Previous</a>
+      <a href="index.html" class="btn-primary">Tutorial home</a>
+    </nav>
+  </main>
+</div>
+<script src="script.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    initWalkthrough();
+    initQuestions(4);
+  });
+</script>
+</body>
+</html>

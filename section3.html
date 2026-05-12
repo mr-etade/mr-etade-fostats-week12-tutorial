@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 3: Residuals &amp; Causation</title>
+<link rel="stylesheet" href="styles.css">
+<script>
+  MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }, svg: { fontCache: 'global' } };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="page-wrapper">
+  <nav class="breadcrumb">
+    <a href="index.html">&larr; Tutorial home</a>
+    <span class="section-pill">Section 3 of 4</span>
+  </nav>
+
+  <main class="container">
+    <header class="section-header">
+      <h1>Residuals &amp; Causation</h1>
+      <p class="lead">A high $R^2$ doesn't guarantee the model is right, or that the relationship is causal. Two essential diagnostics: residual plots, and a hard look for lurking variables.</p>
+    </header>
+
+    <!-- ANIMATION: Toggle between residual plot patterns -->
+    <section class="explorer">
+      <h2>Three residual plot patterns</h2>
+      <p>Toggle between the patterns. Each tells you something different about whether the linear model is appropriate.</p>
+      <div class="tail-toggle">
+        <button class="resid-btn tail-btn active" data-pattern="random">Random scatter (good)</button>
+        <button class="resid-btn tail-btn" data-pattern="curved">Curved (bad)</button>
+        <button class="resid-btn tail-btn" data-pattern="funnel">Funnel (bad)</button>
+      </div>
+      <div class="visualisation full-width">
+        <svg id="resid-svg" viewBox="0 0 500 260" preserveAspectRatio="xMidYMid meet"></svg>
+        <div class="tail-info">
+          <p><strong>Verdict:</strong> <span id="resid-info">Random scatter ⇒ linear model is appropriate</span></p>
+        </div>
+      </div>
+      <div class="callout">
+        <strong>Why this matters:</strong> $R^2$ alone can be high even when the model is wrong. The residual plot is what catches it. If you see a clear pattern, the line is missing something &mdash; either curvature or non-constant variance.
+      </div>
+    </section>
+
+    <!-- QUESTIONS -->
+    <section class="questions">
+      <h2>Questions</h2>
+
+      <div class="question" data-q="1">
+        <div class="q-header">
+          <span class="q-num">Q1</span>
+          <span class="q-points">1 mark</span>
+        </div>
+        <p>An IT student fits a linear regression of server CPU temperature ($y$, °C) against time of day ($x$, hours since midnight) at a Madang ISP. The residual plot shows a clear <strong>U-shape</strong>: residuals are positive at the beginning and end of the day, negative in the middle.</p>
+        <p>What should the student do?</p>
+        <div class="mc-options" data-correct="b">
+          <label class="mc-option">
+            <input type="radio" name="q1-mc" value="a">
+            <span>Report the linear model as appropriate &mdash; the U-shape is just random noise.</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="q1-mc" value="b">
+            <span>Try a non-linear model (e.g. quadratic in $x$) &mdash; the U-shape signals missing curvature.</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="q1-mc" value="c">
+            <span>Collect more data &mdash; the pattern will go away with a larger sample.</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="q1-mc" value="d">
+            <span>Drop the highest and lowest residuals as outliers.</span>
+          </label>
+        </div>
+        <button class="btn-check">Check answer</button>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-q="2">
+        <div class="q-header">
+          <span class="q-num">Q2</span>
+          <span class="q-points">2 marks</span>
+        </div>
+        <p>A cybersecurity analyst at a Port Moresby bank notices that the daily number of failed login attempts ($x$) and the daily number of customer support tickets ($y$) are strongly positively correlated, with $r = 0.89$.</p>
+        <p>Which is the most likely explanation, and why is "failed logins cause more support tickets" the <em>wrong</em> conclusion to draw from $r$ alone?</p>
+        <div class="mc-options" data-correct="c">
+          <label class="mc-option">
+            <input type="radio" name="q2-mc" value="a">
+            <span>The high $r$ proves a direct causal link &mdash; the bank should redesign its login system.</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="q2-mc" value="b">
+            <span>Customer support tickets cause failed login attempts (reverse causation) &mdash; that's the only alternative.</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="q2-mc" value="c">
+            <span>A lurking variable (e.g. server load or service outage) likely drives both &mdash; correlation alone cannot establish a causal direction.</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="q2-mc" value="d">
+            <span>The sample is too small &mdash; with more data, $r$ would drop to zero.</span>
+          </label>
+        </div>
+        <button class="btn-check">Check answer</button>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-q="3">
+        <div class="q-header">
+          <span class="q-num">Q3</span>
+          <span class="q-points">2 marks</span>
+        </div>
+        <p>A WPU network engineer fits a regression of server response time ($y$, ms) against number of concurrent users ($x$). The fitted line has $R^2 = 0.91$, but the residual plot shows that the spread of residuals is small for low values of $x$ and grows much wider as $x$ increases.</p>
+        <p>Which best describes this pattern, and what is the practical implication?</p>
+        <div class="mc-options" data-correct="b">
+          <label class="mc-option">
+            <input type="radio" name="q3-mc" value="a">
+            <span>Random scatter &mdash; the linear model is appropriate and inferences are reliable.</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="q3-mc" value="b">
+            <span>Funnel pattern (heteroscedasticity) &mdash; the line may still describe the trend on average, but standard errors and confidence intervals for $\beta_1$ become unreliable.</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="q3-mc" value="c">
+            <span>Curved pattern &mdash; a quadratic model is needed.</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="q3-mc" value="d">
+            <span>Outlier pattern &mdash; the largest residuals should be removed.</span>
+          </label>
+        </div>
+        <button class="btn-check">Check answer</button>
+        <div class="feedback"></div>
+      </div>
+    </section>
+
+    <nav class="section-nav">
+      <a href="section2.html" class="btn-secondary">&larr; Previous</a>
+      <a href="section4.html" class="btn-primary">Next: Testing the Slope &rarr;</a>
+    </nav>
+  </main>
+</div>
+<script src="script.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    initResidualPlots();
+    initQuestions(3);
+  });
+</script>
+</body>
+</html>

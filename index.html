@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tutorial 12 — Linear Regression II | CMN112/CMP112/CBS102</title>
+<link rel="stylesheet" href="styles.css">
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="page-wrapper">
+  <header class="hero">
+    <div class="hero-bubbles" aria-hidden="true">
+      <span class="bubble b1"></span>
+      <span class="bubble b2"></span>
+      <span class="bubble b3"></span>
+      <span class="bubble b4"></span>
+      <span class="bubble b5"></span>
+    </div>
+    <div class="hero-content">
+      <p class="eyebrow">Week 12 — Tutorial</p>
+      <h1>Correlation, $R^2$ &amp; Inference</h1>
+      <p class="subtitle">Linear Regression II &mdash; Interactive Tutorial</p>
+      <p class="hero-note">Work through each section in order. Keep your exercise book and calculator ready &mdash; you'll do the working there, then enter answers here for instant feedback.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="how-to">
+      <h2>How this works</h2>
+      <div class="how-to-grid">
+        <div class="how-card">
+          <div class="how-num">1</div>
+          <p>Read the prompt and play with each section's interactive explorer.</p>
+        </div>
+        <div class="how-card">
+          <div class="how-num">2</div>
+          <p>Do all working in your exercise book &mdash; that's still the assessable part.</p>
+        </div>
+        <div class="how-card">
+          <div class="how-num">3</div>
+          <p>Enter your answer here. You'll get instant feedback and full working.</p>
+        </div>
+        <div class="how-card">
+          <div class="how-num">4</div>
+          <p>Your progress is saved in your browser. Come back anytime to finish.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sections">
+      <h2>Choose a section</h2>
+      <div class="section-grid">
+        <a class="section-card" href="section1.html" data-section="1">
+          <div class="card-icon">
+            <svg viewBox="0 0 60 60" aria-hidden="true">
+              <circle cx="12" cy="48" r="3" fill="currentColor"/>
+              <circle cx="22" cy="40" r="3" fill="currentColor"/>
+              <circle cx="32" cy="32" r="3" fill="currentColor"/>
+              <circle cx="42" cy="22" r="3" fill="currentColor"/>
+              <circle cx="52" cy="14" r="3" fill="currentColor"/>
+              <line x1="8" y1="52" x2="56" y2="10" stroke="currentColor" stroke-width="2.5" stroke-dasharray="3,2"/>
+            </svg>
+          </div>
+          <h3>1. Pearson's $r$</h3>
+          <p>Measure how tightly the points hug a straight line &mdash; from $-1$ to $+1$.</p>
+          <span class="card-status" id="status-1">Not started</span>
+        </a>
+
+        <a class="section-card" href="section2.html" data-section="2">
+          <div class="card-icon">
+            <svg viewBox="0 0 60 60" aria-hidden="true">
+              <rect x="10" y="20" width="40" height="6" fill="currentColor" opacity="0.8"/>
+              <rect x="10" y="30" width="25" height="6" fill="currentColor" opacity="0.4"/>
+              <text x="30" y="50" text-anchor="middle" font-size="11" font-weight="bold" fill="currentColor" font-family="Fraunces, serif" font-style="italic">$R^2$</text>
+            </svg>
+          </div>
+          <h3>2. $R^2$ &mdash; Explained Variation</h3>
+          <p>Decompose total variation into explained and unexplained pieces.</p>
+          <span class="card-status" id="status-2">Not started</span>
+        </a>
+
+        <a class="section-card" href="section3.html" data-section="3">
+          <div class="card-icon">
+            <svg viewBox="0 0 60 60" aria-hidden="true">
+              <line x1="8" y1="30" x2="52" y2="30" stroke="currentColor" stroke-width="2" stroke-dasharray="3,2"/>
+              <circle cx="14" cy="24" r="2.5" fill="currentColor"/>
+              <circle cx="22" cy="34" r="2.5" fill="currentColor"/>
+              <circle cx="30" cy="26" r="2.5" fill="currentColor"/>
+              <circle cx="38" cy="33" r="2.5" fill="currentColor"/>
+              <circle cx="46" cy="27" r="2.5" fill="currentColor"/>
+              <text x="30" y="50" text-anchor="middle" font-size="9" fill="currentColor">e vs x</text>
+            </svg>
+          </div>
+          <h3>3. Residuals &amp; Causation</h3>
+          <p>Read residual plot patterns &mdash; and watch out for lurking variables.</p>
+          <span class="card-status" id="status-3">Not started</span>
+        </a>
+
+        <a class="section-card" href="section4.html" data-section="4">
+          <div class="card-icon">
+            <svg viewBox="0 0 60 60" aria-hidden="true">
+              <text x="10" y="20" font-size="14" fill="currentColor" font-weight="bold" font-family="Fraunces, serif" font-style="italic">H<tspan font-size="10" baseline-shift="sub">0</tspan></text>
+              <line x1="14" y1="26" x2="14" y2="46" stroke="currentColor" stroke-width="2"/>
+              <text x="10" y="56" font-size="11" fill="currentColor" font-weight="bold" font-family="Fraunces, serif" font-style="italic">β<tspan font-size="9" baseline-shift="sub">1</tspan>=0</text>
+              <path d="M30 30 L50 30" stroke="currentColor" stroke-width="2.5" marker-end="url(#arr)"/>
+              <text x="42" y="22" font-size="14" fill="currentColor" font-weight="bold" font-family="Fraunces, serif" font-style="italic">t</text>
+              <defs>
+                <marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L6,3 z" fill="currentColor"/>
+                </marker>
+              </defs>
+            </svg>
+          </div>
+          <h3>4. Testing the Slope</h3>
+          <p>Walk a full 3-step $t$-test on $\beta_1$ &mdash; cybersecurity training scenario.</p>
+          <span class="card-status" id="status-4">Not started</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="overall-progress">
+      <h2>Your overall progress</h2>
+      <div class="progress-bar-wrapper">
+        <div class="progress-bar" id="overallProgress"></div>
+      </div>
+      <p class="progress-text"><span id="progressCount">0</span> of 4 sections completed</p>
+      <button id="resetBtn" class="btn-reset">Reset all progress</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>CMN112 / CMP112 / CBS102 — Fundamentals of Statistics &middot; Western Pacific University</p>
+  </footer>
+</div>
+
+<script src="script.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    updateLandingProgress();
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      if (confirm('Clear all your progress? This cannot be undone.')) {
+        localStorage.clear();
+        updateLandingProgress();
+      }
+    });
+  });
+</script>
+</body>
+</html>

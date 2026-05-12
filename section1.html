@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 1: Pearson's r</title>
+<link rel="stylesheet" href="styles.css">
+<script>
+  MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }, svg: { fontCache: 'global' } };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="page-wrapper">
+  <nav class="breadcrumb">
+    <a href="index.html">&larr; Tutorial home</a>
+    <span class="section-pill">Section 1 of 4</span>
+  </nav>
+
+  <main class="container">
+    <header class="section-header">
+      <h1>Pearson's $r$</h1>
+      <p class="lead">A single number that captures both the direction and the strength of a linear relationship. Slide the controls to feel how strength, sign, and noise shape the scatter and the value of $r$.</p>
+    </header>
+
+    <!-- INTERACTIVE EXPLORER -->
+    <section class="explorer">
+      <h2>Live explorer</h2>
+      <p>Adjust the three inputs and watch $r$ and $R^2$ update on the same scatter plot.</p>
+      <div class="explorer-grid">
+        <div class="controls">
+          <div class="slider-group">
+            <label for="r-strength">Slope strength <span class="val" id="r-strength-val">50</span></label>
+            <input type="range" id="r-strength" min="0" max="100" step="1" value="50">
+          </div>
+          <div class="slider-group">
+            <label for="r-sign">Direction <span class="val" id="r-sign-val">positive</span></label>
+            <select id="r-sign">
+              <option value="1" selected>positive (uphill)</option>
+              <option value="-1">negative (downhill)</option>
+            </select>
+          </div>
+          <div class="slider-group">
+            <label for="r-noise">Noise / scatter <span class="val" id="r-noise-val">25</span></label>
+            <input type="range" id="r-noise" min="0" max="100" step="1" value="25">
+          </div>
+        </div>
+        <div class="visualisation">
+          <svg id="r-svg" viewBox="0 0 500 280" preserveAspectRatio="xMidYMid meet"></svg>
+          <div class="ci-readout">
+            <div class="readout-row">
+              <span class="readout-label">$r$</span>
+              <span class="readout-val" id="r-readout">0.000</span>
+            </div>
+            <div class="readout-row">
+              <span class="readout-label">$R^2$</span>
+              <span class="readout-val" id="r2-readout">0.000</span>
+            </div>
+            <div class="readout-row">
+              <span class="readout-label">in words</span>
+              <span class="readout-val" id="r-words" style="font-size: 1rem; text-align: center;">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="insight-callouts">
+        <div class="callout">
+          <strong>Try this:</strong> set strength high and noise to $0$. You'll get $r$ very close to $\pm 1$ &mdash; an almost-perfect straight line.
+        </div>
+        <div class="callout">
+          <strong>Try this:</strong> set strength to $0$ but keep some noise. The points scatter randomly and $r$ drops toward $0$ &mdash; no linear trend.
+        </div>
+      </div>
+    </section>
+
+    <!-- QUESTIONS -->
+    <section class="questions">
+      <h2>Questions</h2>
+
+      <div class="question" data-q="1">
+        <div class="q-header">
+          <span class="q-num">Q1</span>
+          <span class="q-points">3 marks</span>
+        </div>
+        <p>The WPU cyber lab tracks $n = 6$ undergraduate research interns on the Bugcrowd training programme. For each intern, $x$ is the weekly hours spent on bug-hunting practice and $y$ is the number of valid vulnerabilities they reported by the end of the month.</p>
+        <p>The data:</p>
+        <p style="font-family: var(--font-mono); font-size: 0.95rem; background: var(--cream); padding: 0.85rem 1rem; border: var(--border-thin);">
+          $x$: 2, 4, 6, 8, 10, 12 &nbsp; (hours/week)<br>
+          $y$: 4, 5, 9, 8, 12, 13 &nbsp; (vulnerabilities)
+        </p>
+        <p class="hint-text">Compute Pearson's $r$ in your exercise book using the formula from the slides. Round to 3 decimal places.</p>
+        <div class="input-row">
+          <div class="input-cell">
+            <label>Pearson's $r$</label>
+            <input type="number" step="0.001" data-answer="0.960" data-tolerance="0.01" class="numeric-input">
+          </div>
+        </div>
+        <button class="btn-check">Check answer</button>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-q="2">
+        <div class="q-header">
+          <span class="q-num">Q2</span>
+          <span class="q-points">1 mark</span>
+        </div>
+        <p>Which of the following statements about Pearson's $r$ is <strong>false</strong>?</p>
+        <div class="mc-options" data-correct="d">
+          <label class="mc-option">
+            <input type="radio" name="q2-mc" value="a">
+            <span>$r$ has the same sign as the slope $m$ of the line of best fit.</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="q2-mc" value="b">
+            <span>$r$ is unit-free &mdash; changing units of $x$ or $y$ does not change $r$.</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="q2-mc" value="c">
+            <span>$r$ is always between $-1$ and $+1$ inclusive.</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="q2-mc" value="d">
+            <span>If $r = 0$, then $x$ and $y$ are unrelated in every possible way.</span>
+          </label>
+        </div>
+        <button class="btn-check">Check answer</button>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-q="3">
+        <div class="q-header">
+          <span class="q-num">Q3</span>
+          <span class="q-points">1 mark</span>
+        </div>
+        <p>A scatter plot of the number of system crashes per week $y$ vs. hours of preventative maintenance $x$ at $n = 15$ Digicel PNG cell towers shows points falling almost exactly on a straight line going from <em>top-left to bottom-right</em> &mdash; towers that get more maintenance hours have far fewer crashes, and the cluster is very tight.</p>
+        <p>Which value of $r$ best matches this scatter plot?</p>
+        <div class="mc-options" data-correct="a">
+          <label class="mc-option">
+            <input type="radio" name="q3-mc" value="a">
+            <span>$r \approx -0.95$</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="q3-mc" value="b">
+            <span>$r \approx -0.30$</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="q3-mc" value="c">
+            <span>$r \approx 0.00$</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="q3-mc" value="d">
+            <span>$r \approx +0.95$</span>
+          </label>
+        </div>
+        <button class="btn-check">Check answer</button>
+        <div class="feedback"></div>
+      </div>
+    </section>
+
+    <nav class="section-nav">
+      <a href="index.html" class="btn-secondary">Home</a>
+      <a href="section2.html" class="btn-primary">Next: $R^2$ &rarr;</a>
+    </nav>
+  </main>
+</div>
+<script src="script.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    initRExplorer();
+    initQuestions(1);
+  });
+</script>
+</body>
+</html>

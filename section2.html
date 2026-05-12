@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 2: R-squared</title>
+<link rel="stylesheet" href="styles.css">
+<script>
+  MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }, svg: { fontCache: 'global' } };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="page-wrapper">
+  <nav class="breadcrumb">
+    <a href="index.html">&larr; Tutorial home</a>
+    <span class="section-pill">Section 2 of 4</span>
+  </nav>
+
+  <main class="container">
+    <header class="section-header">
+      <h1>$R^2$ &mdash; Explained Variation</h1>
+      <p class="lead">$R^2 = r^2$ is the proportion of variation in $y$ that the line explains. Drag the slope and intercept and watch the green (explained) and red (residual) segments swap.</p>
+    </header>
+
+    <!-- INTERACTIVE EXPLORER -->
+    <section class="explorer">
+      <h2>Live explorer</h2>
+      <p>The yellow points are fixed data. Adjust the slope and intercept to fit a line. <span style="color:var(--green);"><strong>Green</strong></span> segments show what the line <em>explains</em>; <span style="color:var(--red);"><strong>red</strong></span> segments show what's left over (residuals).</p>
+      <div class="explorer-grid">
+        <div class="controls">
+          <div class="slider-group">
+            <label for="r2-slope">Slope $m$ <span class="val" id="r2-slope-val">1.00</span></label>
+            <input type="range" id="r2-slope" min="-1" max="3" step="0.05" value="1.00">
+          </div>
+          <div class="slider-group">
+            <label for="r2-intercept">Intercept $c$ <span class="val" id="r2-intercept-val">3.00</span></label>
+            <input type="range" id="r2-intercept" min="0" max="8" step="0.1" value="3.00">
+          </div>
+          <button id="r2-autofit" class="btn-check" style="margin-top: 0.5rem;">Snap to best-fit line</button>
+        </div>
+        <div class="visualisation">
+          <svg id="r2-svg" viewBox="0 0 500 320" preserveAspectRatio="xMidYMid meet"></svg>
+          <div class="ci-readout">
+            <div class="readout-row">
+              <span class="readout-label">$SS_{\text{res}}$</span>
+              <span class="readout-val" id="r2-ssres">0.00</span>
+            </div>
+            <div class="readout-row">
+              <span class="readout-label">$SS_{\text{tot}}$</span>
+              <span class="readout-val" id="r2-sstot">0.00</span>
+            </div>
+            <div class="readout-row">
+              <span class="readout-label">$R^2$</span>
+              <span class="readout-val" id="r2-value">0.000</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="insight-callouts">
+        <div class="callout">
+          <strong>Try this:</strong> set the slope to $0$ (a horizontal line at $c = \bar{y}$). All variation becomes residual &mdash; $R^2 \to 0$. That's the worst-case "no model" baseline.
+        </div>
+        <div class="callout">
+          <strong>Try this:</strong> click "Snap to best-fit line". $R^2$ jumps to its maximum &mdash; the green segments dominate the red. This is what least squares gives you.
+        </div>
+      </div>
+    </section>
+
+    <!-- QUESTIONS -->
+    <section class="questions">
+      <h2>Questions</h2>
+
+      <div class="question" data-q="1">
+        <div class="q-header">
+          <span class="q-num">Q1</span>
+          <span class="q-points">2 marks</span>
+        </div>
+        <p>A regression of monthly cloud-storage cost ($y$, in PGK) against number of active users ($x$) at a Port Moresby SaaS startup gives Pearson's $r = -0.82$. Compute the coefficient of determination $R^2$, rounded to 3 decimal places.</p>
+        <div class="input-row">
+          <div class="input-cell">
+            <label>$R^2$</label>
+            <input type="number" step="0.001" data-answer="0.672" data-tolerance="0.005" class="numeric-input">
+          </div>
+        </div>
+        <button class="btn-check">Check answer</button>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-q="2">
+        <div class="q-header">
+          <span class="q-num">Q2</span>
+          <span class="q-points">2 marks</span>
+        </div>
+        <p>A study fits a linear regression of the number of defects found in code review ($y$) against minutes of review time ($x$) for $n = 40$ pull requests at a Lae fintech company. The result is $R^2 = 0.684$.</p>
+        <p>Which interpretation is correct?</p>
+        <div class="mc-options" data-correct="b">
+          <label class="mc-option">
+            <input type="radio" name="q2-mc" value="a">
+            <span>About 68.4% of the variation in code review time is explained by the number of defects.</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="q2-mc" value="b">
+            <span>About 68.4% of the variation in the number of defects is explained by code review time. The remaining 31.6% is due to other factors.</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="q2-mc" value="c">
+            <span>68.4% of code reviews will find defects.</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="q2-mc" value="d">
+            <span>The probability that review time causes defects is 68.4%.</span>
+          </label>
+        </div>
+        <button class="btn-check">Check answer</button>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-q="3">
+        <div class="q-header">
+          <span class="q-num">Q3</span>
+          <span class="q-points">1 mark</span>
+        </div>
+        <p>A research team reports $R^2 = 0.94$ for a regression of model accuracy on training-set size. Which of the following is the team <strong>not</strong> entitled to claim from this single number alone?</p>
+        <div class="mc-options" data-correct="c">
+          <label class="mc-option">
+            <input type="radio" name="q3-mc" value="a">
+            <span>The line fits the observed data points tightly.</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="q3-mc" value="b">
+            <span>Training-set size accounts for about 94% of the variation in accuracy within the observed data range.</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="q3-mc" value="c">
+            <span>The linear model is genuinely the correct model for this relationship.</span>
+          </label>
+          <label class="mc-option">
+            <input type="radio" name="q3-mc" value="d">
+            <span>About 6% of the variation in accuracy is unexplained by training-set size.</span>
+          </label>
+        </div>
+        <button class="btn-check">Check answer</button>
+        <div class="feedback"></div>
+      </div>
+    </section>
+
+    <nav class="section-nav">
+      <a href="section1.html" class="btn-secondary">&larr; Previous</a>
+      <a href="section3.html" class="btn-primary">Next: Residuals &amp; Causation &rarr;</a>
+    </nav>
+  </main>
+</div>
+<script src="script.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    initR2Explorer();
+    initQuestions(2);
+  });
+</script>
+</body>
+</html>
